@@ -1,4 +1,4 @@
-package com.weng.coupon.Entity;
+package com.weng.coupon.entity;
 
 import com.weng.coupon.constant.CouponCategory;
 import com.weng.coupon.constant.DistributeTarget;
@@ -7,6 +7,7 @@ import com.weng.coupon.vo.TemplateRule;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.joda.time.DateTime;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,6 +34,8 @@ public class CouponTemplate {
     private ProductLine productLine;
     /** 总数 */
     private Integer count;
+    /** 创建时间 */
+    private DateTime createTime;
     /** 创建用户 */
     private Long userId;
     /** 优惠券模板的编码 */
@@ -56,6 +59,7 @@ public class CouponTemplate {
         this.rule = templateRule;
         // 优惠券模板唯一编码 = 4(产品线和类型) + 8(日期: 20190101) + id(扩充为4位)
         this.key = productLine.toString() + category + new SimpleDateFormat("yyyyMMdd").format(new Date());
+        this.createTime = new DateTime();
     }
 
 }
