@@ -1,7 +1,10 @@
 package com.weng.coupon.config;
 
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.weng.coupon.entity.CouponTemplate;
+import com.weng.coupon.serializer.CouponTemplateSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
@@ -19,6 +22,8 @@ public class GsonConfig {
         builder.setDateFormat("yyyy-MM-dd HH:mm:ss");
         //设置Gson解析时修饰符为protected的字段被过滤掉
         builder.excludeFieldsWithModifiers(Modifier.PROTECTED);
+        //设置序列化
+        builder.registerTypeAdapter(new TypeToken<CouponTemplate>(){}.getType(), new CouponTemplateSerializer());
         //创建Gson对象放入GsonHttpMessageConverter的实例中并返回converter
         Gson gson = builder.create();
         converter.setGson(gson);

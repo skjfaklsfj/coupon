@@ -5,7 +5,6 @@ import com.weng.coupon.handler.JodaTimeTypeHandler;
 import com.weng.coupon.handler.TemplateRuleTypeHandler;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.EnumOrdinalTypeHandler;
-import org.apache.ibatis.type.EnumTypeHandler;
 
 import java.util.List;
 
@@ -28,14 +27,24 @@ public interface CouponTemplateMapper {
             @Result(property = "rule", column = "rule", typeHandler = TemplateRuleTypeHandler.class)
     })
     public CouponTemplate findByName(@Param("name") String name);
-//    /**
-//     * <h2>根据 available 和 expired 标记查找模板记录</h2>
-//     * where available = ... and expired = ...
-//     * */
-//    public List<CouponTemplate> findAllByAvailableAndExpired(Boolean available, Boolean expired);
-//    /**
-//     * <h2>根据 expired 标记查找模板记录</h2>
-//     * where expired = ...
-//     * */
-//    public List<CouponTemplate> findAllByExpired(Boolean expired);
+    /**
+     * <h2>根据 available 和 expired 标记查找模板记录</h2>
+     * where available = ... and expired = ...
+     * */
+    @Select("select * from coupon_template where available = #{available} and expired = #{expired}")
+    @ResultMap("CouponTemplateMap")
+    public List<CouponTemplate> findAllByAvailableAndExpired(@Param("available") Boolean available, @Param("expired") Boolean expired);
+    /**
+     * <h2>根据 expired 标记查找模板记录</h2>
+     * where expired = ...
+     * */
+    @Select("select  * from coupon_template where expired = #{expired}")
+    @ResultMap("CouponTemplateMap")
+    public List<CouponTemplate> findAllByExpired(@Param("expired") Boolean expired);
+
+    @Insert("insert into coupon_template(available, expired, name, logo, intro, category, product_line, coupon_count, create_time, user_id, template_key, target, rule) values" +
+            "(#{available}, #{expired}, #{name}, #{logo}, #{desc}, #{category, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}, #{productLine, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}," +
+            "#{count}, #{createTime, typeHandler=com.weng.coupon.handler.JodaTimeTypeHandler}, #{userId}, #{key}, #{target, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}, #{rule, typeHandler=com.weng.coupon.handler.TemplateRuleTypeHandler})")
+    @SelectKey(statement = "select last_insert_id()", keyProperty = "id", before = false, resultType = Integer.class)
+    public int testInsert(CouponTemplate couponTemplate);
 }
