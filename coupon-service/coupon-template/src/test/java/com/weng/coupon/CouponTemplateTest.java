@@ -6,14 +6,17 @@ import com.google.gson.JsonObject;
 import com.weng.coupon.constant.CouponCategory;
 import com.weng.coupon.dao.CouponTemplateMapper;
 import com.weng.coupon.entity.CouponTemplate;
+import com.weng.coupon.service.AsyncService;
 import com.weng.coupon.vo.TemplateRule;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -22,8 +25,13 @@ import java.util.List;
 public class CouponTemplateTest {
     @Autowired
     private CouponTemplateMapper mapper;
+    @Autowired
+    private AsyncService asyncService;
+
+    @Autowired
+    private StringRedisTemplate template;
     @Test
-    public void testGson() {
+    public void testGson() throws InterruptedException {
 //        {
 //            "expiration": {
 //                "period": 1,
@@ -50,16 +58,18 @@ public class CouponTemplateTest {
 //        System.out.println(date1);
 
 //        TemplateRule.Expiration expiration = new TemplateRule.Expiration(5, 5, 4L);
-//        TemplateRule.Usage usage = new TemplateRule.Usage("浙江", "衢州", "生鲜");
+//        TemplateRule.Usage usage = new TemplateRule.Usage("浙江", "杭州", "生鲜");
 //        TemplateRule.Discount discount = new TemplateRule.Discount(50, 400);
 //        TemplateRule templateRule = new TemplateRule(expiration, discount, 100, usage, "100");
 //        CouponTemplate couponTemplate = new CouponTemplate("abc", "dcf", "你好", "001", 1, 1, 100L, 1, templateRule);
-//        int i = mapper.testInsert(couponTemplate);
-//        System.out.println(i);
-//        System.out.println(couponTemplate);
+//        couponTemplate.setId(12);
+        CouponTemplate couponTemplate = mapper.findByName("abc");
+        asyncService.asyncConstructCouponByTemplate(couponTemplate);
+        couponTemplate = mapper.findByName("sd");
+        asyncService.asyncConstructCouponByTemplate(couponTemplate);
+        System.exit(0);
+//        DateTime dateTime = new DateTime();
+//        JsonObject jsonObject = new Gson().toJsonTree(dateTime).getAsJsonObject();
 
-        DateTime dateTime = new DateTime();
-        JsonObject jsonObject = new Gson().toJsonTree(dateTime).getAsJsonObject();
-        System.out.println(jsonObject);
     }
 }

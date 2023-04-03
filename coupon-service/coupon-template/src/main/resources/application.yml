@@ -22,13 +22,13 @@ spring:
       max-lifetime: 45000
       auto-commit: true
       pool-name: CouponHikariCP
-#  redis:
-#    database: 0
-#    host: 127.0.0.1
-#    port: 6379
-#    # password:
-#    # 连接超时时间
-#    timeout: 10000
+  redis:
+    database: 0
+    host: 123.60.182.220
+    port: 6379
+    password: UYeR1byMDVvhvvpxUf5z1hlI1D
+    # 连接超时时间
+    timeout: 10000
 
 mybatis:
   configuration:

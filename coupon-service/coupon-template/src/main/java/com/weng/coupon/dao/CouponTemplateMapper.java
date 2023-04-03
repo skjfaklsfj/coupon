@@ -47,4 +47,9 @@ public interface CouponTemplateMapper {
             "#{count}, #{createTime, typeHandler=com.weng.coupon.handler.JodaTimeTypeHandler}, #{userId}, #{key}, #{target, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}, #{rule, typeHandler=com.weng.coupon.handler.TemplateRuleTypeHandler})")
     @SelectKey(statement = "select last_insert_id()", keyProperty = "id", before = false, resultType = Integer.class)
     public int testInsert(CouponTemplate couponTemplate);
+
+    @Update("update coupon_template set available=#{available}, expired=#{expired}, name=#{name}, logo=#{logo}, intro=#{desc}, category=#{category, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}," +
+            "product_line=#{productLine, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}, coupon_count=#{count}, template_key=#{key}, target=#{target, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}," +
+            "rule=#{rule, typeHandler=com.weng.coupon.handler.TemplateRuleTypeHandler} where id=#{id}")
+    public int updateCouponTemplate(CouponTemplate couponTemplate);
 }

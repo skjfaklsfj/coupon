@@ -14,8 +14,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 public class CommonResponseDataAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
-        if (!methodParameter.getDeclaringClass().isAnnotationPresent(IgnoreResponseAdvice.class)) return false;
-        if (!methodParameter.getMethod().isAnnotationPresent(IgnoreResponseAdvice.class)) return false;
+        if (methodParameter.getDeclaringClass().isAnnotationPresent(IgnoreResponseAdvice.class)) return false;
+        if (methodParameter.getMethod().isAnnotationPresent(IgnoreResponseAdvice.class)) return false;
         return true;
     }
 
