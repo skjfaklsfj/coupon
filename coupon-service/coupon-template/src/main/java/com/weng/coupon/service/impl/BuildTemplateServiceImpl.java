@@ -6,8 +6,12 @@ import com.weng.coupon.exception.CouponException;
 import com.weng.coupon.service.AsyncService;
 import com.weng.coupon.service.BuildTemplateService;
 import com.weng.coupon.vo.TemplateRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
+@Slf4j
 public class BuildTemplateServiceImpl implements BuildTemplateService {
     @Autowired
     private AsyncService asyncService;

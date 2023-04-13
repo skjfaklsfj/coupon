@@ -8,7 +8,7 @@ spring:
     name: eureka-client-coupon-template
   datasource:
     # 数据源
-    url: jdbc:mysql://123.60.182.220:3306/coupon_data?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://123.60.182.220:3306/coupon_data?allowMultiQueries=true&autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: UYeR1byMDVvhvvpxUf5z1hlI1D
     type: com.zaxxer.hikari.HikariDataSource
@@ -60,3 +60,4 @@ info:
 logging:
   level:
     com.weng.coupon: debug
+  config: classpath:log4j2.xml

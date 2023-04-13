@@ -5,12 +5,16 @@ import com.weng.coupon.entity.CouponTemplate;
 import com.weng.coupon.exception.CouponException;
 import com.weng.coupon.service.TemplateBaseService;
 import com.weng.coupon.vo.CouponTemplateSDK;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@Service
+@Slf4j
 public class TemplateBaseServiceImpl implements TemplateBaseService {
     @Autowired
     private CouponTemplateMapper couponTemplateMapper;

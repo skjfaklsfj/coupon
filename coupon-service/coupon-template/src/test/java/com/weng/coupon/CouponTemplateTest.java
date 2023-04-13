@@ -17,6 +17,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -63,11 +64,14 @@ public class CouponTemplateTest {
 //        TemplateRule templateRule = new TemplateRule(expiration, discount, 100, usage, "100");
 //        CouponTemplate couponTemplate = new CouponTemplate("abc", "dcf", "你好", "001", 1, 1, 100L, 1, templateRule);
 //        couponTemplate.setId(12);
-        CouponTemplate couponTemplate = mapper.findByName("abc");
-        asyncService.asyncConstructCouponByTemplate(couponTemplate);
-        couponTemplate = mapper.findByName("sd");
-        asyncService.asyncConstructCouponByTemplate(couponTemplate);
-        System.exit(0);
+        List<CouponTemplate> list = new ArrayList<>();
+        CouponTemplate couponTemplate = mapper.findByName("abcd");
+        couponTemplate.setName("abc");
+        list.add(couponTemplate);
+        couponTemplate = mapper.findByName("sdd");
+        couponTemplate.setName("sd");
+        list.add(couponTemplate);
+        mapper.updateCouponTemplates(list);
 //        DateTime dateTime = new DateTime();
 //        JsonObject jsonObject = new Gson().toJsonTree(dateTime).getAsJsonObject();
 

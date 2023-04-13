@@ -59,12 +59,11 @@ public interface CouponTemplateMapper {
 
     @Update({
             "<script>",
-            "<foreach collection='couponTemplates' item='item' separator=';'>",
-            "update coupon_template set available=#{item.available}, expired=#{item.expired}, name=#{item.name}, logo=#{item.logo}, intro=#{item.desc}, category=#{item.category, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}," +
-                    "product_line=#{item.productLine, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}, coupon_count=#{item.count}, template_key=#{item.key}, target=#{item.target, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}," +
-                    "rule=#{item.rule, typeHandler=com.weng.coupon.handler.TemplateRuleTypeHandler} where id=#{item.id}",
-            "</foreach>",
-            "<script>"
+                "<foreach collection='couponTemplates' item='item' separator=';'>",
+                    "update coupon_template "+
+                    "set available=#{item.available},expired=#{item.expired},name=#{item.name},logo=#{item.logo},intro=#{item.desc},category=#{item.category, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},product_line=#{item.productLine, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},coupon_count=#{item.count},template_key=#{item.key},target=#{item.target, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},rule=#{item.rule, typeHandler=com.weng.coupon.handler.TemplateRuleTypeHandler} where id=#{item.id}",
+                "</foreach>",
+            "</script>"
             })
-    public int updateCouponTemplates(@Param("couponTemplates") List<CouponTemplate> couponTemplateList);
+    public int updateCouponTemplates(@Param("couponTemplates") List<CouponTemplate> couponTemplates);
 }
