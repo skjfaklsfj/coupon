@@ -1,6 +1,5 @@
 package com.weng.coupon.advice;
 
-import com.google.gson.Gson;
 import com.weng.coupon.annotation.IgnoreResponseAdvice;
 import com.weng.coupon.vo.CommonResponse;
 import org.springframework.core.MethodParameter;

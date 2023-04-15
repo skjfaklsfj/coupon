@@ -2,10 +2,10 @@
 <Configuration status="INFO" monitorInterval="30">
     <properties>
         <!--设置容器日志在硬盘上输出的目录-->
-        <property name="logPath">/Users/wengxiaohang/mydata/logs/coupon-template/container/</property>
+        <property name="logPath">/Users/wengxiaohang/mydata/logs/coupon-distribution/container/</property>
         <!--设置项目日志在硬盘上输出的目录-->
-        <property name="logPathForProject">/Users/wengxiaohang/mydata/logs/coupon-template/project/</property>
-        <property name="logPathForTest">/Users/wengxiaohang/mydata/logs/coupon-template/test/</property>
+        <property name="logPathForProject">/Users/wengxiaohang/mydata/logs/coupon-distribution/project/</property>
+        <property name="logPathForTest">/Users/wengxiaohang/mydata/logs/coupon-distribution/test/</property>
     </properties>
 
     <Appenders>
