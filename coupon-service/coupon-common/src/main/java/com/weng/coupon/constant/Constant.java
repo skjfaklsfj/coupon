@@ -1,4 +1,4 @@
-package com.weng.coupon.constants;
+package com.weng.coupon.constant;
 
 public class Constant {
     /** Kafka 消息的 Topic */

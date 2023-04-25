@@ -1,6 +1,6 @@
 package com.weng.coupon.service.impl;
 
-import com.weng.coupon.constants.Constant;
+import com.weng.coupon.constant.Constant;
 import com.weng.coupon.dao.CouponTemplateMapper;
 import com.weng.coupon.entity.CouponTemplate;
 import com.weng.coupon.service.AsyncService;
@@ -12,7 +12,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
