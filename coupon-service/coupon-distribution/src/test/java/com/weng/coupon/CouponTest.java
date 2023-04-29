@@ -1,5 +1,6 @@
 package com.weng.coupon;
 
+import com.google.gson.Gson;
 import com.weng.coupon.constants.CouponStatus;
 import com.weng.coupon.dao.CouponMapper;
 import com.weng.coupon.entity.Coupon;
@@ -18,7 +19,6 @@ public class CouponTest {
     private CouponMapper mapper;
     @Test
     public void testCoupon() {
-        List<Coupon> list = mapper.findAllByUserIdAndStatus(3L, CouponStatus.USABLE);
-        list.forEach(System.out::println);
+        System.out.println(new Gson().toJson(CouponStatus.USABLE));
     }
 }

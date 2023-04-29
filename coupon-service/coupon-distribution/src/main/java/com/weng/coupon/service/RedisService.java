@@ -20,7 +20,7 @@ public interface RedisService {
     List<Coupon> getCachedCoupons(Long userId, Integer status);
 
     /**
-     * <h2>保存空的优惠券列表到缓存中</h2>
+     * <h2>保存空的优惠券列表到缓存中，避免缓存穿透</h2>
      * @param userId 用户 id
      * @param status 优惠券状态列表
      * */
