@@ -29,11 +29,11 @@ spring:
     password: UYeR1byMDVvhvvpxUf5z1hlI1D
     # 连接超时时间
     timeout: 10000
-#  kafka:
-#    bootstrap-servers: 127.0.0.1:9092
-#    consumer:
-#      group-id: coupon-x
-#      auto-offset-reset: latest
+  kafka:
+    bootstrap-servers: 123.60.182.220:9092
+    consumer:
+      group-id: coupon-1
+      auto-offset-reset: latest
   # 开启 ribbon 重试机制, 即获取服务失败是否从另外一个节点重试
   cloud:
     loadbalancer:

@@ -1,14 +1,11 @@
 package com.weng.coupon.entity;
 
-import com.weng.coupon.constants.CouponStatus;
+import com.weng.coupon.constant.CouponStatus;
 import com.weng.coupon.vo.CouponTemplateSDK;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
-import org.springframework.data.annotation.CreatedDate;
-
-import java.util.Date;
 
 @Data
 @AllArgsConstructor

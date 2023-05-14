@@ -1,6 +1,6 @@
 package com.weng.coupon.handler;
 
-import com.weng.coupon.constants.CouponStatus;
+import com.weng.coupon.constant.CouponStatus;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 

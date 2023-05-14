@@ -1,6 +1,6 @@
 package com.weng.coupon.dao;
 
-import com.weng.coupon.constants.CouponStatus;
+import com.weng.coupon.constant.CouponStatus;
 import com.weng.coupon.entity.Coupon;
 import com.weng.coupon.handler.CouponStatusTypeHandler;
 import com.weng.coupon.handler.JodaTimeTypeHandler;
@@ -20,4 +20,27 @@ public interface CouponMapper {
      * where userId = ... and status = ...
      * */
     List<Coupon> findAllByUserIdAndStatus(@Param("userId") Long userId, @Param("status") CouponStatus status);
+
+
+    @Select({
+            "<script>" +
+                    "select * from coupon where id in" +
+                    "<foreach collection='ids' item='id' open='(' separator=',' close=')'>" +
+                    "#{id}" +
+                    "</foreach>" +
+                    "and status=#{status.code}" +
+            "</script>"})
+    @ResultMap("CouponMap")
+    List<Coupon> findAllByIdsAndStatus(@Param("ids") List<Integer> ids, @Param("status") CouponStatus status);
+
+    @Update({
+            "<script>" +
+                    "<foreach collection='coupons' item='coupon' separator=';'>" +
+                        "update coupon " +
+                        "set template_id=#{coupon.templateId}, user_id=#{coupon.userId}, coupon_code=#{coupon.couponCode}, assign_time=#{coupon.assignTime, typeHandler=com.weng.coupon.handler.JodaTimeTypeHandler}, status=#{coupon.status, typeHandler=com.weng.coupon.handler.CouponStatusTypeHandler} " +
+                        "where id=#{coupon.id}" +
+                    "</foreach>" +
+            "</script>"
+    })
+    Integer saveAll(@Param("coupons") List<Coupon> coupons);
 }

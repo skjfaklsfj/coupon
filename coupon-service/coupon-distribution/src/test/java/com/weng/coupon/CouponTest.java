@@ -1,9 +1,11 @@
 package com.weng.coupon;
 
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
-import com.weng.coupon.constants.CouponStatus;
+import com.weng.coupon.constant.CouponStatus;
 import com.weng.coupon.dao.CouponMapper;
 import com.weng.coupon.entity.Coupon;
+import org.apache.commons.collections4.CollectionUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,10 @@ public class CouponTest {
     private CouponMapper mapper;
     @Test
     public void testCoupon() {
-        System.out.println(new Gson().toJson(CouponStatus.USABLE));
+        List<Coupon> coupons = mapper.findAllByIdsAndStatus(Lists.newArrayList(10, 11), CouponStatus.USABLE);
+        coupons.forEach(e -> e.setStatus(CouponStatus.EXPIRED));
+        System.out.println(mapper.saveAll(coupons));
     }
+
+
 }
