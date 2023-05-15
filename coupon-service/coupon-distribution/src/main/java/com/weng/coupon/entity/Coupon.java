@@ -52,5 +52,6 @@ public class Coupon {
         this.userId = userId;
         this.couponCode = couponCode;
         this.status = status;
+        this.assignTime = new DateTime();
     }
 }

@@ -43,4 +43,8 @@ public interface CouponMapper {
             "</script>"
     })
     Integer saveAll(@Param("coupons") List<Coupon> coupons);
+
+    @Insert("insert into coupon(template_id, user_id, coupon_code, assign_time, status) values (#{templateId}, #{userId}, #{couponCode}, #{assignTime, typeHandler=com.weng.coupon.handler.JodaTimeTypeHandler}, #{status, typeHandler=com.weng.coupon.handler.CouponStatusTypeHandler})")
+    @SelectKey(statement = "select last_insert_id()", keyProperty = "id", before = false, resultType = Integer.class)
+    Coupon addCoupon(@Param("coupon") Coupon coupon);
 }
