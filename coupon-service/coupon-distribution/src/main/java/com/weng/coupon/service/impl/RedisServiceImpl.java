@@ -55,7 +55,7 @@ public class RedisServiceImpl implements RedisService {
 
         // key:coupon_id value:coupon的序列化
         Map<String, String> invalidMap = new HashMap<>();
-        invalidMap.put("-1", gson.toJson(Coupon.invalidCoupon()));
+        invalidMap.put("-1", new Gson().toJson(Coupon.invalidCoupon()));
 
         // 一次性发送多条redis命令，只是一次请求发送多条命令还是类似lua脚本一次执行多条命令？
         SessionCallback<Object> sessionCallback = new SessionCallback<Object>() {

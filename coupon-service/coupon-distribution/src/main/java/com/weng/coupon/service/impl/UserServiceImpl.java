@@ -13,12 +13,10 @@ import com.weng.coupon.service.KafkaService;
 import com.weng.coupon.service.RedisService;
 import com.weng.coupon.service.UserService;
 import com.weng.coupon.utils.CouponClassify;
-import com.weng.coupon.vo.AcquireTemplateRequest;
-import com.weng.coupon.vo.CouponKafkaMessage;
-import com.weng.coupon.vo.CouponTemplateSDK;
-import com.weng.coupon.vo.SettlementInfo;
+import com.weng.coupon.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.joda.time.DateTime;
@@ -26,12 +24,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -161,6 +161,43 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public SettlementInfo settlement(SettlementInfo info) throws CouponException {
+        List<SettlementInfo.CouponAndTemplateInfo> ctInfos = info.getCouponAndTemplateInfos();
+        if (CollectionUtils.isEmpty(ctInfos)) {
+            log.info("Empty Coupons For Settle.");
+            double goodSum = 0;
+            for (GoodsInfo goodInfos : info.getGoodsInfos()) {
+                goodSum += goodInfos.getCount() * goodInfos.getPrice();
+            }
+            info.setCost(retain2Decimals(goodSum));
+            return info;
+        }
+        List<Coupon> coupons = findCouponsByStatus(info.getUserId(), CouponStatus.USABLE.getCode());
+        Map<Integer, Coupon> id2Coupon = coupons.stream()
+                .collect(Collectors.toMap(
+                        Coupon::getId,
+                        Function.identity()
+                ));
+        if (MapUtils.isEmpty(id2Coupon) || !CollectionUtils.isSubCollection(ctInfos.stream().map(SettlementInfo.CouponAndTemplateInfo::getId).collect(Collectors.toList()), id2Coupon.keySet())) {
+            log.info("{}", id2Coupon.keySet());
+            log.info("{}", ctInfos.stream()
+                    .map(SettlementInfo.CouponAndTemplateInfo::getId)
+                    .collect(Collectors.toList()));
+            log.error("User Coupon Has Some Problem, It Is Not SubCollection" +
+                    "Of Coupons!");
+            throw new CouponException("User Coupon Has Some Problem, " +
+                    "It Is Not SubCollection Of Coupons!");
+        }
+        log.debug("Current Settlement Coupons Is User's: {}", ctInfos.size());
+        List<Coupon> settleCoupons = ctInfos.stream().map(i -> id2Coupon.get(i.getId())).collect(Collectors.toList());
+        // todo:调用结算微服务
         return null;
+    }
+
+    private double retain2Decimals(double value) {
+
+        // BigDecimal.ROUND_HALF_UP 代表四舍五入
+        return new BigDecimal(value)
+                .setScale(2, BigDecimal.ROUND_HALF_UP)
+                .doubleValue();
     }
 }
