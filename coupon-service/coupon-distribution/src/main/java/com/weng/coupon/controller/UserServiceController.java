@@ -1,10 +1,12 @@
 package com.weng.coupon.controller;
 
 import com.google.gson.Gson;
+import com.weng.coupon.annotation.IgnoreResponseAdvice;
 import com.weng.coupon.entity.Coupon;
 import com.weng.coupon.exception.CouponException;
 import com.weng.coupon.service.UserService;
 import com.weng.coupon.vo.AcquireTemplateRequest;
+import com.weng.coupon.vo.CommonResponse;
 import com.weng.coupon.vo.CouponTemplateSDK;
 import com.weng.coupon.vo.SettlementInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -35,11 +37,14 @@ public class UserServiceController {
      * <h2>根据用户 id 查找当前可以领取的优惠券模板</h2>
      * */
     @GetMapping("/template")
-    public List<CouponTemplateSDK> findAvailableTemplate(
+    @IgnoreResponseAdvice
+    public CommonResponse findAvailableTemplate(
             @RequestParam("userId") Long userId) throws CouponException {
 
         log.info("Find Available Template: {}", userId);
-        return userService.findAvailableTemplate(userId);
+        CommonResponse response = new CommonResponse(0, "ok");
+        response.setData(userService.findAvailableTemplate(userId));
+        return response;
     }
 
     /**

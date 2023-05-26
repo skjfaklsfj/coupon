@@ -46,7 +46,7 @@ public class ManJianZheKouExecutor extends AbstractExecutor implements RuleExecu
 
     @Override
     public SettlementInfo computeRule(SettlementInfo settlement) {
-        Double goodsSum = goodsSum(settlement.getGoodsInfos());
+        Double goodsSum = retain2Decimals(goodsSum(settlement.getGoodsInfos()));
         SettlementInfo settlementInfo = processGoodsTypeNotSatisfy(settlement, goodsSum);
         if (settlementInfo != null) {
             log.debug("ManJian And ZheKou Template Is Not Match To GoodsType!");

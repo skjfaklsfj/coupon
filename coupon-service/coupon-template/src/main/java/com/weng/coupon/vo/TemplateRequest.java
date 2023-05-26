@@ -22,7 +22,7 @@ public class TemplateRequest {
     private Integer target;
     private TemplateRule rule;
     public boolean validate() {
-        boolean stringValid = StringUtils.isEmpty(name) && StringUtils.isEmpty(logo) && StringUtils.isEmpty(desc);
+        boolean stringValid = StringUtils.isNotEmpty(name) && StringUtils.isNotEmpty(logo) && StringUtils.isNotEmpty(desc);
         boolean enumValid = null != CouponCategory.of(category) && null != ProductLine.of(productLine) && null != DistributeTarget.of(target);
         boolean numValid = count != null && count > 0 && userId != null && userId > 0;
         return stringValid && enumValid && numValid && rule.validate();
